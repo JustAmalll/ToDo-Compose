@@ -12,4 +12,11 @@
     <string name="search">Search</string>
     <string name="close_icon">Close Icon</string>
 
+    <string name="sad_face_icon">Sad Face Icon</string>
+
+    <string name="empty_content">No Tasks Found.</string>
+
+    <string name="title">Title</string>
+    <string name="description">Some random text</string>
+
 </resources>

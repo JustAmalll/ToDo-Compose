@@ -22,20 +22,42 @@ import dev.amal.todo_compose.R
 import dev.amal.todo_compose.components.PriorityItem
 import dev.amal.todo_compose.data.models.Priority
 import dev.amal.todo_compose.ui.theme.*
+import dev.amal.todo_compose.ui.viewmodels.SharedViewModel
+import dev.amal.todo_compose.utils.SearchAppBarState
+import dev.amal.todo_compose.utils.TrailingIconState
 
 @Composable
-fun ListAppBar() {
-//    DefaultListAppBar(
-//        onSearchClicked = {},
-//        onSortClicked = {},
-//        onDeleteClicked = {}
-//    )
-    SearchAppBar(
-        text = "",
-        onTextChange = {},
-        onCloseClicked = {},
-        onSearchClicked = {}
-    )
+fun ListAppBar(
+    sharedViewModel: SharedViewModel,
+    searchAppBarState: SearchAppBarState,
+    searchTextState: String
+) {
+    when (searchAppBarState) {
+        SearchAppBarState.CLOSED -> {
+            DefaultListAppBar(
+                onSearchClicked = {
+                    sharedViewModel.searchAppBarState.value =
+                        SearchAppBarState.OPENED
+                },
+                onSortClicked = {},
+                onDeleteClicked = {}
+            )
+        }
+        else -> {
+            SearchAppBar(
+                text = searchTextState,
+                onTextChange = { newText ->
+                    sharedViewModel.searchTextState.value = newText
+                },
+                onCloseClicked = {
+                    sharedViewModel.searchAppBarState.value =
+                        SearchAppBarState.CLOSED
+                    sharedViewModel.searchTextState.value = ""
+                },
+                onSearchClicked = {}
+            )
+        }
+    }
 }
 
 @Composable
@@ -181,6 +203,10 @@ fun SearchAppBar(
     onCloseClicked: () -> Unit,
     onSearchClicked: (String) -> Unit
 ) {
+    var trailingIconState by remember {
+        mutableStateOf(TrailingIconState.READY_TO_DELETE)
+    }
+
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -221,7 +247,20 @@ fun SearchAppBar(
             trailingIcon = {
                 IconButton(
                     onClick = {
-                        onCloseClicked()
+                        when (trailingIconState) {
+                            TrailingIconState.READY_TO_DELETE -> {
+                                onTextChange("")
+                                trailingIconState = TrailingIconState.READY_TO_CLOSE
+                            }
+                            TrailingIconState.READY_TO_CLOSE -> {
+                                if (text.isNotEmpty()) {
+                                    onTextChange("")
+                                } else {
+                                    onCloseClicked()
+                                    trailingIconState = TrailingIconState.READY_TO_DELETE
+                                }
+                            }
+                        }
                     }
                 ) {
                     Icon(

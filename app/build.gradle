@@ -82,4 +82,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:2.37"
     kapt "com.google.dagger:hilt-android-compiler:2.37"
     kapt 'androidx.hilt:hilt-compiler:1.0.0'
+
+    //Lottie Compose
+    implementation 'com.airbnb.android:lottie-compose:4.1.0'
 }
