@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.amal.todo_compose.data.models.Priority
 import dev.amal.todo_compose.data.models.ToDoTask
+import dev.amal.todo_compose.data.repositories.DataStoreRepository
 import dev.amal.todo_compose.data.repositories.ToDoRepository
 import dev.amal.todo_compose.utils.Action
 import dev.amal.todo_compose.utils.Constants.MAX_TITLE_LENGTH
@@ -22,7 +23,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SharedViewModel @Inject constructor(
-    private val repository: ToDoRepository
+    private val repository: ToDoRepository,
+    private val dataStoreRepository: DataStoreRepository
 ) : ViewModel() {
 
     val action: MutableState<Action> = mutableStateOf(Action.NO_ACTION)
@@ -39,7 +41,7 @@ class SharedViewModel @Inject constructor(
 
     private val _searchTasks =
         MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Idle)
-    val searchTasks: StateFlow<RequestState<List<ToDoTask>>> = _searchTasks
+    val searchedTasks: StateFlow<RequestState<List<ToDoTask>>> = _searchTasks
 
     private val _allTasks =
         MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Idle)
@@ -49,7 +51,7 @@ class SharedViewModel @Inject constructor(
         _searchTasks.value = RequestState.Loading
         try {
             viewModelScope.launch {
-                repository.searchDatabase(searchQuery = searchQuery)
+                repository.searchDatabase(searchQuery = "%$searchQuery%")
                     .collect { searchedTasks ->
                         _searchTasks.value = RequestState.Success(searchedTasks)
                     }
@@ -93,6 +95,7 @@ class SharedViewModel @Inject constructor(
             )
             repository.addTask(toDoTask = toDoTask)
         }
+        searchAppBarState.value = SearchAppBarState.CLOSED
     }
 
     private fun updateTask() {
@@ -119,6 +122,12 @@ class SharedViewModel @Inject constructor(
         }
     }
 
+    private fun deleteAllTasks() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllTasks()
+        }
+    }
+
     fun handleDatabaseActions(action: Action) {
         when (action) {
             Action.ADD -> {
@@ -131,13 +140,12 @@ class SharedViewModel @Inject constructor(
                 deleteTask()
             }
             Action.DELETE_ALL -> {
-
+                deleteAllTasks()
             }
             Action.UNDO -> {
                 addTask()
             }
             else -> {
-
             }
         }
         this.action.value = Action.NO_ACTION
