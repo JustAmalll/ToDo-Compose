@@ -14,11 +14,8 @@ import dev.amal.todo_compose.utils.Constants.MAX_TITLE_LENGTH
 import dev.amal.todo_compose.utils.RequestState
 import dev.amal.todo_compose.utils.SearchAppBarState
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,6 +44,18 @@ class SharedViewModel @Inject constructor(
         MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Idle)
     val allTasks: StateFlow<RequestState<List<ToDoTask>>> = _allTasks
 
+    private val _sortState =
+        MutableStateFlow<RequestState<Priority>>(RequestState.Idle)
+    val sortState: StateFlow<RequestState<Priority>> = _sortState
+
+    private val _selectedTask: MutableStateFlow<ToDoTask?> = MutableStateFlow(null)
+    val selectedTask: StateFlow<ToDoTask?> = _selectedTask
+
+    init {
+        getAllTasks()
+        readSortState()
+    }
+
     fun searchDatabase(searchQuery: String) {
         _searchTasks.value = RequestState.Loading
         try {
@@ -62,7 +71,42 @@ class SharedViewModel @Inject constructor(
         searchAppBarState.value = SearchAppBarState.TRIGGERED
     }
 
-    fun getAllTasks() {
+    val lowPriorityTasks: StateFlow<List<ToDoTask>> =
+        repository.sortByLowPriority.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            emptyList()
+        )
+
+    val highPriorityTasks: StateFlow<List<ToDoTask>> =
+        repository.sortByHighPriority.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            emptyList()
+        )
+
+    private fun readSortState() {
+        _sortState.value = RequestState.Loading
+        try {
+            viewModelScope.launch {
+                dataStoreRepository.readSortState
+                    .map { Priority.valueOf(it) }
+                    .collect {
+                        _sortState.value = RequestState.Success(it)
+                    }
+            }
+        } catch (e: Exception) {
+            _sortState.value = RequestState.Error(e)
+        }
+    }
+
+    fun persistSortState(priority: Priority) {
+        viewModelScope.launch(Dispatchers.IO) {
+            dataStoreRepository.persistSortState(priority = priority)
+        }
+    }
+
+    private fun getAllTasks() {
         _allTasks.value = RequestState.Loading
         try {
             viewModelScope.launch {
@@ -74,9 +118,6 @@ class SharedViewModel @Inject constructor(
             _allTasks.value = RequestState.Error(e)
         }
     }
-
-    private val _selectedTask: MutableStateFlow<ToDoTask?> = MutableStateFlow(null)
-    val selectedTask: StateFlow<ToDoTask?> = _selectedTask
 
     fun getSelectedTask(taskId: Int) {
         viewModelScope.launch {
@@ -148,7 +189,6 @@ class SharedViewModel @Inject constructor(
             else -> {
             }
         }
-        this.action.value = Action.NO_ACTION
     }
 
     fun updateTaskFields(selectedTask: ToDoTask?) {
@@ -166,9 +206,8 @@ class SharedViewModel @Inject constructor(
     }
 
     fun updateTitle(newTitle: String) {
-        if (newTitle.length < MAX_TITLE_LENGTH) {
+        if (newTitle.length < MAX_TITLE_LENGTH)
             title.value = newTitle
-        }
     }
 
     fun validateFields(): Boolean =
