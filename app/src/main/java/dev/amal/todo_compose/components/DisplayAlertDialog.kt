@@ -1,6 +1,5 @@
 package dev.amal.todo_compose.components
 
-import android.app.AlertDialog
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource

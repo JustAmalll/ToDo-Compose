@@ -8,8 +8,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
-import com.google.accompanist.navigation.animation.composable
 import androidx.navigation.navArgument
+import com.google.accompanist.navigation.animation.composable
 import dev.amal.todo_compose.ui.screens.task.TaskScreen
 import dev.amal.todo_compose.ui.viewmodels.SharedViewModel
 import dev.amal.todo_compose.utils.Action

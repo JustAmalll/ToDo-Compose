@@ -1,5 +1,6 @@
 package dev.amal.todo_compose.ui.screens.list
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.animateFloatAsState
@@ -94,9 +95,9 @@ fun HandleListContent(
     onSwipeToDelete: (Action, ToDoTask) -> Unit,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
-    if (tasks.isEmpty()) {
+    if (tasks.isEmpty())
         EmptyContent()
-    } else {
+    else {
         DisplayTasks(
             tasks = tasks,
             onSwipeToDelete = onSwipeToDelete,
@@ -105,6 +106,7 @@ fun HandleListContent(
     }
 }
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
@@ -116,9 +118,7 @@ fun DisplayTasks(
     LazyColumn {
         items(
             items = tasks,
-            key = { task ->
-                task.id
-            }
+            key = { task -> task.id }
         ) { task ->
             val dismissState = rememberDismissState()
             val dismissDirection = dismissState.dismissDirection
@@ -145,12 +145,12 @@ fun DisplayTasks(
                 visible = itemAppeared && !isDismissed,
                 enter = expandVertically(
                     animationSpec = tween(
-                        durationMillis = 300
+                        durationMillis = ANIMATION_DURATION
                     )
                 ),
                 exit = shrinkVertically(
                     animationSpec = tween(
-                        durationMillis = 300
+                        durationMillis = ANIMATION_DURATION
                     )
                 )
             ) {
@@ -177,7 +177,7 @@ fun RedBackground(degrees: Float) {
         modifier = Modifier
             .fillMaxSize()
             .background(HighPriorityColor)
-            .padding(horizontal = LARGEST_PADDING),
+            .padding(horizontal = LARGE_PADDING),
         contentAlignment = Alignment.CenterEnd
     ) {
         Icon(
@@ -200,13 +200,11 @@ fun TaskItem(
         color = MaterialTheme.colors.taskItemBackgroundColor,
         shape = RectangleShape,
         elevation = TASK_ITEM_ELEVATION,
-        onClick = {
-            navigateToTaskScreen(toDoTask.id)
-        }
+        onClick = { navigateToTaskScreen(toDoTask.id) }
     ) {
         Column(
             modifier = Modifier
-                .padding(all = LARGE_PADDING)
+                .padding(all = MEDIUM_PADDING)
                 .fillMaxWidth()
         ) {
             Row {

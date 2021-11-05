@@ -2,12 +2,10 @@ package dev.amal.todo_compose.ui.screens.task
 
 import android.content.Context
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.compose.BackHandler
-import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import dev.amal.todo_compose.data.models.Priority
 import dev.amal.todo_compose.data.models.ToDoTask
@@ -26,23 +24,20 @@ fun TaskScreen(
 
     val context = LocalContext.current
 
-    BackHandler {
-        navigateToListScreen(Action.NO_ACTION)
-    }
+    BackHandler { navigateToListScreen(Action.NO_ACTION) }
 
     Scaffold(
         topBar = {
             TaskAppBar(
                 selectedTask = selectedTask,
                 navigateToListScreen = { action ->
-                    if (action == Action.NO_ACTION) {
+                    if (action == Action.NO_ACTION)
                         navigateToListScreen(action)
-                    } else {
+                    else {
                         if (sharedViewModel.validateFields())
                             navigateToListScreen(action)
                         else toast(context = context)
                     }
-
                 }
             )
         },

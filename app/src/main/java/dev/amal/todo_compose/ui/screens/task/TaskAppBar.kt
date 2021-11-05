@@ -23,9 +23,9 @@ fun TaskAppBar(
     selectedTask: ToDoTask?,
     navigateToListScreen: (Action) -> Unit
 ) {
-    if (selectedTask == null) {
+    if (selectedTask == null)
         NewTaskAppBar(navigateToListScreen = navigateToListScreen)
-    } else {
+    else {
         ExistingTaskAppBar(
             selectedTask = selectedTask,
             navigateToListScreen = navigateToListScreen
@@ -48,9 +48,7 @@ fun NewTaskAppBar(
             )
         },
         backgroundColor = MaterialTheme.colors.topAppBarBackGroundColor,
-        actions = {
-            AddAction(onAddClicked = navigateToListScreen)
-        }
+        actions = { AddAction(onAddClicked = navigateToListScreen) }
     )
 }
 

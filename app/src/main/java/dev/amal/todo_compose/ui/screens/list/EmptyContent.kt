@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.*
 import dev.amal.todo_compose.R
+import dev.amal.todo_compose.ui.theme.EMPTY_CONTENT_ANIMATION_SIZE
 import dev.amal.todo_compose.ui.theme.MediumGray
 
 @Composable
@@ -51,7 +52,7 @@ fun Loader() {
     LottieAnimation(
         composition = compositionResult.value,
         progress = progress,
-        modifier = Modifier.size(300.dp)
+        modifier = Modifier.size(EMPTY_CONTENT_ANIMATION_SIZE)
     )
 }
 

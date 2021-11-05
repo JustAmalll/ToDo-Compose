@@ -74,9 +74,7 @@ fun DefaultListAppBar(
     TopAppBar(
         title = {
             Text(
-                text = stringResource(
-                    id = R.string.tasks
-                ),
+                text = stringResource(id = R.string.tasks),
                 color = MaterialTheme.colors.topAppBarContentColor
             )
         },
@@ -122,7 +120,7 @@ fun SearchAction(
         Icon(
             imageVector = Icons.Filled.Search,
             contentDescription = stringResource(
-                id = R.string.search_tasks
+                id = R.string.search_tasks_icon
             ),
             tint = MaterialTheme.colors.topAppBarContentColor
         )
@@ -140,7 +138,7 @@ fun SortAction(
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_filter_list),
-            contentDescription = stringResource(id = R.string.sort_actions),
+            contentDescription = stringResource(id = R.string.sort_actions_icon),
             tint = MaterialTheme.colors.topAppBarContentColor
         )
         DropdownMenu(
@@ -155,7 +153,6 @@ fun SortAction(
             ) {
                 PriorityItem(priority = Priority.LOW)
             }
-
             DropdownMenuItem(
                 onClick = {
                     expanded = false
@@ -164,7 +161,6 @@ fun SortAction(
             ) {
                 PriorityItem(priority = Priority.HIGH)
             }
-
             DropdownMenuItem(
                 onClick = {
                     expanded = false
@@ -202,7 +198,7 @@ fun DeleteAllAction(
                 }
             ) {
                 Text(
-                    modifier = Modifier.padding(start = LARGE_PADDING),
+                    modifier = Modifier.padding(start = MEDIUM_PADDING),
                     text = stringResource(id = R.string.delete_all_action),
                     style = Typography.subtitle2
                 )
@@ -228,9 +224,7 @@ fun SearchAppBar(
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = text,
-            onValueChange = {
-                onTextChange(it)
-            },
+            onValueChange = { onTextChange(it) },
             placeholder = {
                 Text(
                     modifier = Modifier.alpha(ContentAlpha.medium),
@@ -247,7 +241,8 @@ fun SearchAppBar(
                 IconButton(
                     modifier = Modifier
                         .alpha(ContentAlpha.disabled),
-                    onClick = {}) {
+                    onClick = {}
+                ) {
                     Icon(
                         imageVector = Icons.Filled.Search,
                         contentDescription = stringResource(id = R.string.delete_all_action),

@@ -24,7 +24,6 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PRE
 class DataStoreRepository @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-
     private object PreferencesKeys {
         val sortKey = stringPreferencesKey(name = PREFERENCE_KEY)
     }

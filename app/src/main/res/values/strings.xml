@@ -2,12 +2,12 @@
     <string name="app_name">To-Do Compose</string>
 
     <string name="to_do_logo">To-Do Logo</string>
-    <string name="add_button">Add Button</string>
+    <string name="add_button_icon">Add Button</string>
 
     <string name="tasks">Tasks</string>
 
-    <string name="search_tasks">Search Tasks</string>
-    <string name="sort_actions">Sort Tasks</string>
+    <string name="search_tasks_icon">Search Tasks</string>
+    <string name="sort_actions_icon">Sort Tasks</string>
     <string name="delete_all_action">Delete All</string>
     <string name="search_icon">Search Icon</string>
     <string name="search">Search</string>

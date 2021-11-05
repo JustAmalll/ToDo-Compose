@@ -39,9 +39,7 @@ fun ListScreen(
     DisplaySnackBar(
         scaffoldState = scaffoldState,
         onComplete = { sharedViewModel.action.value = it },
-        onUndoClicked = {
-            sharedViewModel.action.value = it
-        },
+        onUndoClicked = { sharedViewModel.action.value = it },
         taskTitle = sharedViewModel.title.value,
         action = action
     )
@@ -82,15 +80,13 @@ fun ListFab(
     onFabClicked: (taskId: Int) -> Unit
 ) {
     FloatingActionButton(
-        onClick = {
-            onFabClicked(-1)
-        },
+        onClick = { onFabClicked(-1) },
         backgroundColor = MaterialTheme.colors.fabBackgroundColor
     ) {
         Icon(
             imageVector = Icons.Filled.Add,
             contentDescription = stringResource(
-                id = R.string.add_button
+                id = R.string.add_button_icon
             ),
             tint = Color.White
         )

@@ -13,8 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import dev.amal.todo_compose.R
 import dev.amal.todo_compose.components.PriorityDropDown
 import dev.amal.todo_compose.data.models.Priority
-import dev.amal.todo_compose.ui.theme.LARGE_PADDING
 import dev.amal.todo_compose.ui.theme.MEDIUM_PADDING
+import dev.amal.todo_compose.ui.theme.SMALL_PADDING
 
 @Composable
 fun TaskContent(
@@ -29,7 +29,7 @@ fun TaskContent(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.background)
-            .padding(all = LARGE_PADDING)
+            .padding(all = MEDIUM_PADDING)
     ) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -40,7 +40,7 @@ fun TaskContent(
             singleLine = true
         )
         Divider(
-            modifier = Modifier.height(MEDIUM_PADDING),
+            modifier = Modifier.height(SMALL_PADDING),
             color = MaterialTheme.colors.background
         )
         PriorityDropDown(

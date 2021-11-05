@@ -12,12 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import dev.amal.todo_compose.data.models.Priority
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -26,9 +21,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.amal.todo_compose.R
+import dev.amal.todo_compose.data.models.Priority
+import dev.amal.todo_compose.ui.theme.DROP_DOWN_MENU_FRACTION
 import dev.amal.todo_compose.ui.theme.PRIORITY_DROP_DOWN_HEIGHT
 import dev.amal.todo_compose.ui.theme.PRIORITY_INDICATOR_SIZE
-import java.util.concurrent.Flow
 
 @Composable
 fun PriorityDropDown(
@@ -81,7 +77,7 @@ fun PriorityDropDown(
             )
         }
         DropdownMenu(
-            modifier = Modifier.fillMaxWidth(fraction = 0.94f),
+            modifier = Modifier.fillMaxWidth(fraction = DROP_DOWN_MENU_FRACTION),
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {

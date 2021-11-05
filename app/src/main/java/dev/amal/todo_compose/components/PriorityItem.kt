@@ -10,9 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import dev.amal.todo_compose.data.models.Priority
-import dev.amal.todo_compose.ui.theme.LARGE_PADDING
+import dev.amal.todo_compose.ui.theme.MEDIUM_PADDING
 import dev.amal.todo_compose.ui.theme.PRIORITY_INDICATOR_SIZE
 import dev.amal.todo_compose.ui.theme.Typography
 
@@ -23,7 +22,7 @@ fun PriorityItem(priority: Priority) {
             drawCircle(color = priority.color)
         }
         Text(
-            modifier = Modifier.padding(start = LARGE_PADDING),
+            modifier = Modifier.padding(start = MEDIUM_PADDING),
             text = priority.name,
             style = Typography.subtitle2,
             color = MaterialTheme.colors.onSurface

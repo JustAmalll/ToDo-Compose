@@ -1,7 +1,6 @@
 package dev.amal.todo_compose.utils
 
 object Constants {
-
     const val DATABASE_TABLE = "todo_table"
     const val DATABASE_NAME = "todo_database"
 
@@ -16,6 +15,6 @@ object Constants {
     const val PREFERENCE_KEY = "sort_state"
 
     const val MAX_TITLE_LENGTH = 20
-    const val SPLASH_SCREEN_DELAY = 3000L
 
+    const val SPLASH_SCREEN_DELAY = 3000L
 }

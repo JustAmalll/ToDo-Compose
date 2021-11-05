@@ -32,15 +32,11 @@ fun SplashScreen(
     var startAnimation by remember { mutableStateOf(false) }
     val offsetState by animateDpAsState(
         targetValue = if (startAnimation) 0.dp else 100.dp,
-        animationSpec = tween(
-            durationMillis = 1000
-        )
+        animationSpec = tween(durationMillis = 1000)
     )
     val alphaState by animateFloatAsState(
         targetValue = if (startAnimation) 1f else 0f,
-        animationSpec = tween(
-            durationMillis = 1000
-        )
+        animationSpec = tween(durationMillis = 1000)
     )
 
     LaunchedEffect(key1 = true) {
