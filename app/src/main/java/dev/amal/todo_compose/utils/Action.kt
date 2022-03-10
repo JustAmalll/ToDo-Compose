@@ -9,6 +9,5 @@ enum class Action {
     NO_ACTION
 }
 
-fun String?.toAction(): Action {
-    return if (this.isNullOrEmpty()) Action.NO_ACTION else Action.valueOf(this)
-}
+fun String?.toAction(): Action =
+    if (this.isNullOrEmpty()) Action.NO_ACTION else Action.valueOf(this)

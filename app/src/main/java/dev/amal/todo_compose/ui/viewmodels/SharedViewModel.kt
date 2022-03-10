@@ -130,8 +130,7 @@ class SharedViewModel @Inject constructor(
     }
 
     fun updateTitle(newTitle: String) {
-        if (newTitle.length < MAX_TITLE_LENGTH)
-            title.value = newTitle
+        if (newTitle.length < MAX_TITLE_LENGTH) title.value = newTitle
     }
 
     fun searchDatabase(searchQuery: String) {
@@ -205,8 +204,7 @@ class SharedViewModel @Inject constructor(
             Action.UNDO -> {
                 addTask()
             }
-            else -> {
-            }
+            else -> {}
         }
     }
 

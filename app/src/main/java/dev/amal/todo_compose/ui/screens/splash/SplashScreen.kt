@@ -71,9 +71,7 @@ fun Splash(offsetState: Dp, alphaState: Float) {
 @Composable
 fun getLogo(): Int =
     if (isSystemInDarkTheme())
-        R.drawable.ic_logo_dark
-    else
-        R.drawable.ic_logo_light
+        R.drawable.ic_logo_dark else R.drawable.ic_logo_light
 
 @Composable
 @Preview

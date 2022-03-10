@@ -41,11 +41,8 @@ fun DisplayAlertDialog(
                 }
             },
             dismissButton = {
-                OutlinedButton(
-                    onClick = { closeDialog() })
-                {
-                    Text(text = stringResource(id = R.string.no))
-                }
+                OutlinedButton(onClick = { closeDialog() })
+                { Text(text = stringResource(id = R.string.no)) }
             },
             onDismissRequest = { closeDialog() }
         )
